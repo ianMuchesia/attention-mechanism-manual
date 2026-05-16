@@ -39,3 +39,42 @@ class ScaledDotProductAttention(nn.Module):
         return scores
         
         
+    def softmax(self,scores,V):
+        
+        
+        
+        weights =  torch.softmax(scores,dim=-1)
+    
+        outputs = weights @ V
+        
+        return outputs,weights
+    
+    
+    def apply_mask(self, scores, mask):
+        if mask is not None:
+            return scores.masked_fill(mask == 0, -1e9)
+        return scores
+    
+    
+    def forward(self,X,mask=None):
+        
+        q,k,v = self.compute_qkv(X)
+        
+        scores = self.compute_scores(q,k)
+        
+        scores = self.apply_mask(scores,mask)
+        
+        output,weights = self.softmax(scores,v)
+        
+        return output,weights
+        
+        
+    
+    
+        
+        
+    
+        
+        
+        
+        

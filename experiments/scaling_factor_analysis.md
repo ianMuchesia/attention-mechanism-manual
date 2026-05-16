@@ -1,0 +1,1 @@
+- Without scaling, the Softmax becomes too sharp, forcing attention heavily onto single tokens rather than smoothly mixing context.
